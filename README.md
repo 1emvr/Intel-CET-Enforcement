@@ -142,3 +142,6 @@ public:
 ```
 *Matteo Malvica's example vfgadget: A virtual method, taking the character argument for callback()*
 
+The callback is just an empty C-style function pointer. In his PoC, the OffSec class is simply loaded into memory. *Reverse engineering time...*
+
+// TODO
