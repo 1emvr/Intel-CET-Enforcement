@@ -101,10 +101,11 @@ Because of C++ class inheritance, virtual functions provide overwritable pointer
 
 The question is, what is the process necessary to replace a vtable pointer to an attacker-controlled, forged vtable? Also, how is the call-chain constructed?
 
-Two known methods of COOP:
+## Targeted Dispatchers for COOP:
 - Recursive COOP 
-	- virtual methods that recursively call other virtual methods
-	- class destructors which call on other destructors
+	- Virtual methods that recursively call other virtual methods
+	- Class destructors which call on other destructors
+	- An iteration over an array/LL of objects, invoking virtual methods foreach
 
 
 ```cpp
@@ -123,7 +124,7 @@ public:
 	BaseA *objA = new BaseA;
 	BaseB *objB = new BaseB;
 
-	virtual ~Derived() { // attacker-controlled virtual destructor
+	virtual ~Derived() {  
 		delete objA; 
 		objB->unref();
 	}
@@ -131,11 +132,9 @@ public:
 ```
 *Example provided by Bret Finley: https://github.com/bretafinley* \[3\]
 
-- Unrolled COOP 
 
-## Possible Mitigations
-- modify vtables from read-access to execute-access only, preventing layout disclosure?
 ### sources:
    - https://windows-internals.com/cet-updates-dynamic-address-ranges/
    - https://joannacss.github.io/preprints/msr4ps22-coop-preprint.pdf
+   - https://www.cs.cit.tum.de/fileadmin/w00cfj/ct/papers/2021-RAID-Muntean.pdf
    - https://github.com/bretafinley/coop \[3\]
