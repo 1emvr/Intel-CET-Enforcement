@@ -109,8 +109,6 @@ The question is, what is the process necessary to replace a vtable pointer to an
 - Class destructors which call on other destructors
 - An iteration over an array/LL of objects, invoking virtual methods foreach
 
-Chaining begins with a primary vfgadget that acts as the main loop for the attack.  Obviously the calls need to point to valid functions.
-
 *scenario*: Another chained vulnerability in the application overwrites a vtable pointer and we get an indirect call primitive. 
 
 - Obtaining the vfgadget offset from stack pointer->\_this + offset
