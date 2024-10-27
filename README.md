@@ -100,6 +100,39 @@ Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn'
 Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. These virtual functions reside in the vtable. Although the vtable is a read-only data structure, the table's pointer is not.
 
 The question is, what is the process necessary to replace a vtable pointer to an attacker-controlled, forged vtable? Also, how is the call-chain constructed?
+
+Two known methods of COOP:
+- Recursive COOP 
+	- virtual methods that recursively call other virtual methods
+	- class destructors which call on other destructors
+
+
+```cpp
+class BaseA {
+public:
+	virtual ~BaseA(); 
+}
+
+class BaseB {
+public:
+	virtual void unref();
+}
+
+class Derived {
+public:
+	BaseA *objA = new BaseA;
+	BaseB *objB = new BaseB;
+
+	virtual ~Derived() { // attacker-controlled virtual destructor
+		delete objA;
+		objB->unref();
+	}
+}
+```
+*Example provided by Bret Finley: https://github.com/bretafinley*
+
+- Unrolled COOP 
+
 ## Possible Mitigations
 - modify vtables from read-access to execute-access only, preventing layout disclosure?
 ### sources:
