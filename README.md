@@ -11,7 +11,7 @@ When a function is called, the return address is pushed onto the Shadow Stack (h
 If strict mode is not enabled on the system and the target binary is not `CETCOMPAT`, all failed checks will be ignored and the program will execute normally, similar to `CFG Protections` but unlike CFG, CET will continue to execute operational checks during runtime.
 
 ## CETCOMPAT
-If the `OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG]->GuardFlags` does have the `CETCOMPAT` flagged, `RtlFindDynamicEnforcedAddressInRanges` will be called to check if the target is inside one of the CET-compatible address ranges upon jmp/call.
+If the `OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG].GuardFlags` does have the `CETCOMPAT` flagged, `RtlFindDynamicEnforcedAddressInRanges` will be called to check if the target is inside one of the CET-compatible address ranges upon jmp/call.
 
 If the range is invalid, or for some reason the process shouldn't crash (not CET-compatible or audit mode is enabled), then `KiFixupControlProtectionUserModeReturnMismatch` to insert the target address into the shadow stack as an exclusion.
 
