@@ -20,17 +20,26 @@ If the range is invalid, or for some reason the process shouldn't crash (not CET
 ```cpp
 typedef struct _EPROCESS {
     // <...>
+
     struct _RTL_AVL_TREE DynamicEHContinuationTargetsTree;  
     struct _EX_PUSH_LOCK DynamicEHContinuationTargetsLock;  
     /* 0x0b28 */ struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES DynamicEnforcedCetCompatibleRanges;  
     unsigned long DisabledComponentFlags;
+
     // <...>
 } EPROCESS, *PEPROCESS;
 
 
+//0x10 bytes (sizeof)
+struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES {
+    struct _RTL_AVL_TREE Tree;                                              //0x0
+    struct _EX_PUSH_LOCK Lock;                                              //0x8
+}; 
+
+
 ```
 
-The `DynamicEnforcedCetCompatibleRanges` struct contains an `RTL_AVL_TREE` and an `EX_PUSH_LOCK`. New ranges are inserted into the tree through a call to `NtSetInformationProcess` with the new information class `ProcessDynamicEnforcedCetCompatibleRanges (0x66)`
+The `_PS_DYNAMIC_ENFORCED_ADDRESS_RANGES` struct contains an `RTL_AVL_TREE` and an `EX_PUSH_LOCK`. New ranges are inserted into the tree through a call to `NtSetInformationProcess` with the new information class `ProcessDynamicEnforcedCetCompatibleRanges (0x66)`
 
 The caller supplies a pointer to a `PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE_INFORMATION` struct that contains the address ranges to insert into or remove from the AVL Tree.
 
