@@ -111,19 +111,6 @@ The question is, what is the process necessary to replace a vtable pointer to an
 
 Chaining begins with a primary vfgadget that acts as the main loop for the attack.  Obviously the calls need to point to valid functions.
 
-```asm
-mov     rbx, [rcx+0x40]
-loop_start:
-    mov     rax, [rbx]
-    call    cs:__guard_dispatch_icall_fptr
-    mov     rbx, [rbx+20h]
-    test    rbx, rbx
-    jnz     short loop_start
-...
-loop_exit:
-    ret
-```
-
 *scenario*: Another chained vulnerability in the application overwrites a vtable pointer and we get an indirect call primitive. 
 
 - Obtaining the vfgadget offset from stack pointer->\_this + offset
@@ -141,6 +128,19 @@ public:
         callback(a);
     }
 };
+```
+
+```asm
+mov     rbx, [rcx+0x40]
+loop_start:
+    mov     rax, [rbx]
+    call    cs:__guard_dispatch_icall_fptr
+    mov     rbx, [rbx+20h]
+    test    rbx, rbx
+    jnz     short loop_start
+...
+loop_exit:
+    ret
 ```
 *Matteo Malvica's example vfgadget*
 
