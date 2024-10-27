@@ -94,7 +94,12 @@ It only allows a process to add dynamic CET compatible ranges for remote process
 
 Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypass to CET, but this greatly increases the level of complexity for exploit-development and reduces the  attack surface dramatically.
 
-More about Counterfeit Object-Oriented Programming in another section...
+## Counterfeit Object-Oriented Programming (COOP)
+Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. Instead, a vtable pointer can be copied and manipulated, keeping the original stack in place. 
+
+- allocating a fixed space and writing?
+- obtaining this_ptr (rcx) from the stack?
+...
 
 
 ### sources:
