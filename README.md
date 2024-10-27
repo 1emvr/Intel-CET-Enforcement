@@ -110,3 +110,18 @@ The question is, what is the process necessary to replace a vtable pointer to an
 - An iteration over an array/LL of objects, invoking virtual methods foreach
 
 Chaining begins with a primary vfgadget that acts as the main loop for the attack.  Obviously the calls need to point to valid functions.
+
+```asm
+mov     rbx, [rcx+0x40]
+loop_start:
+    mov     rax, [rbx]
+    call    cs:__guard_dispatch_icall_fptr
+    mov     rbx, [rbx+20h]
+    test    rbx, rbx
+    jnz     short loop_start
+...
+loop_exit:
+    ret
+```
+
+vtable pointer corruption from something 
