@@ -124,9 +124,11 @@ loop_exit:
     ret
 ```
 
-vtable pointer corruption from another chained vulnerability overwrites a vtable pointer and we get an indirect call primitive. 
+*scenario*: Another chained vulnerability in the application overwrites a vtable pointer and we get an indirect call primitive. 
 
-Obtaining the vfgadget's \_this pointer requires leaking the stack pointer first and retrieving \_this from a static offset and preparing an API call requires calculating the function address and arguments at the required offsets within the counterfeit object.
+- Obtaining the vfgadget offset from stack pointer->\_this + offset
+- Preparing an API call, calculating the function address and arguments 
+- Writing argument data at the required offsets within the counterfeit object.
 
 ```cpp
 class OffSec {
@@ -140,7 +142,7 @@ public:
     }
 };
 ```
-*Matteo Malvica's example vfgadget: A virtual method, taking the character argument for callback()*
+*Matteo Malvica's example vfgadget*
 
 The callback is just an empty C-style function pointer. In his PoC, the OffSec class is simply loaded into memory. *Reverse engineering time...*
 
