@@ -97,9 +97,9 @@ Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypa
 ## Counterfeit Object-Oriented Programming (COOP)
 Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. 
 
-Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. 
+Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. These virtual functions reside in the vtable. Although the vtable is a read-only data structure, the table's pointer is not.
 
-These overridden functions reside in the vtable. 
+The question is, what is the process necessary to replace a vtable pointer to an attacker-controlled, forged vtable? Also, how is the call-chain constructed?
 ## Possible Mitigations
 - modify vtables from read-access to execute-access only, preventing layout disclosure?
 ### sources:
