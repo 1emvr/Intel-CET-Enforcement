@@ -95,6 +95,8 @@ It only allows a process to add dynamic CET compatible ranges for remote process
 Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypass to CET, but this greatly increases the level of complexity for exploit-development and reduces the  attack surface dramatically.
 
 ## Counterfeit Object-Oriented Programming (COOP)
+In 2015, Felix Schuster and his team researched the new code-reuse method.
+
 Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. 
 
 Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. These virtual functions reside in the vtable. Although the vtable is a read-only data structure, the table's pointer is not.
@@ -132,9 +134,5 @@ public:
 ```
 *Example provided by Bret Finley: https://github.com/bretafinley* \[3\]
 
-
 ### sources:
-   - https://windows-internals.com/cet-updates-dynamic-address-ranges/
-   - https://joannacss.github.io/preprints/msr4ps22-coop-preprint.pdf
-   - https://www.cs.cit.tum.de/fileadmin/w00cfj/ct/papers/2021-RAID-Muntean.pdf
-   - https://github.com/bretafinley/coop \[3\]
+-  https://github.com/bretafinley/coop \[3\]
