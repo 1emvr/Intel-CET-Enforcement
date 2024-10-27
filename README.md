@@ -124,4 +124,4 @@ loop_exit:
     ret
 ```
 
-vtable pointer corruption from something 
+vtable pointer corruption from another chained vulnerability overwrites a vtable pointer and we get an indirect call primitive. 
