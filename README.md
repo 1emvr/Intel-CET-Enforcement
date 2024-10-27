@@ -95,7 +95,8 @@ It only allows a process to add dynamic CET compatible ranges for remote process
 Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypass to CET, but this greatly increases the level of complexity for exploit-development and reduces the  attack surface dramatically.
 
 ## Counterfeit Object-Oriented Programming (COOP)
-In 2015, Felix Schuster and his team researched the new code-reuse method.
+In 2015, Felix Schuster and his team researched this new code-reuse method:
+https://ieeexplore.ieee.org/document/7163058/metrics#metrics
 
 Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. 
 
