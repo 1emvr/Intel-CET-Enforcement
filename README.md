@@ -129,3 +129,18 @@ vtable pointer corruption from another chained vulnerability overwrites a vtable
 Obtaining the vfgadget's \_this pointer requires leaking the stack pointer first and retrieving \_this from a static offset. Preparing an API call with the function address and arguments at the required offsets within the counterfeit object.
 
 Obviously this will require calculating addresses to API calls as well. 
+
+```cpp
+class OffSec {
+public:
+    char* a;
+    int (*callback)(char* a);
+
+public:
+    virtual void trigger(char* a1) {
+        callback(a);
+    }
+};
+```
+*Matteo Malvica's example vfgadget: A virtual method, taking the character argument for callback()*
+
