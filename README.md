@@ -104,35 +104,9 @@ Because of C++ class inheritance, virtual functions provide overwritable pointer
 The question is, what is the process necessary to replace a vtable pointer to an attacker-controlled, forged vtable? Also, how is the call-chain constructed?
 
 ## Targeted Dispatchers for COOP:
-- Recursive COOP 
-	- Virtual methods that recursively call other virtual methods
-	- Class destructors which call on other destructors
-	- An iteration over an array/LL of objects, invoking virtual methods foreach
 
+- Virtual methods that recursively call other virtual methods
+- Class destructors which call on other destructors
+- An iteration over an array/LL of objects, invoking virtual methods foreach
 
-```cpp
-class BaseA {
-public:
-	virtual ~BaseA(); 
-}
-
-class BaseB {
-public:
-	virtual void unref();
-}
-
-class Derived {
-public:
-	BaseA *objA = new BaseA;
-	BaseB *objB = new BaseB;
-
-	virtual ~Derived() {  
-		delete objA; 
-		objB->unref();
-	}
-}
-```
-*Example provided by Bret Finley: https://github.com/bretafinley* \[3\]
-
-### sources:
--  https://github.com/bretafinley/coop \[3\]
+Chaining begins with a primary vfgadget that acts as the main loop for the attack.  Obviously the calls need to point to valid functions.
