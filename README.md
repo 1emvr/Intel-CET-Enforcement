@@ -21,12 +21,12 @@ If the range is invalid, or for some reason the process shouldn't crash (not CET
 
 ```cpp
 typedef struct _EPROCESS {
-    // <...>
-    struct _RTL_AVL_TREE DynamicEHContinuationTargetsTree;  
-    struct _EX_PUSH_LOCK DynamicEHContinuationTargetsLock;  
-    /* 0x0b28 */ struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES DynamicEnforcedCetCompatibleRanges;  
-    unsigned long DisabledComponentFlags;
-    // <...>
+    // <...>
+    struct _RTL_AVL_TREE DynamicEHContinuationTargetsTree;  
+    struct _EX_PUSH_LOCK DynamicEHContinuationTargetsLock;  
+    /* 0x0b28 */ struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES DynamicEnforcedCetCompatibleRanges;  
+    unsigned long DisabledComponentFlags;
+    // <...>
 } EPROCESS, *PEPROCESS;
 
 
@@ -37,42 +37,43 @@ The `DynamicEnforcedCetCompatibleRanges` struct contains an `RTL_AVL_TREE` and a
 The caller supplies a pointer to a `PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE_INFORMATION` struct that contains the address ranges to insert into or remove from the AVL Tree.
 
 ```cpp
-typedef struct _PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE   {  
-    ULONG_PTR BaseAddress;  
-    SIZE_T Size;  
-    DWORD Flags;  
-} PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE, *PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE;
+typedef struct _PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE {  
+    ULONG_PTR BaseAddress;  
+    SIZE_T Size;  
+    DWORD Flags;  
+} PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE, *PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE;
 
-typedef struct _PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION   {  
-    WORD NumberOfRanges; 
-    WORD Reserved;  
-    DWORD Reserved2;  
-    PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE Ranges;  
-} PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION, *PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION;
+typedef struct _PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION {  
+    WORD NumberOfRanges; 
+    WORD Reserved;  
+    DWORD Reserved2;  
+    PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE Ranges;  
+} PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION, *PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION;
 ```
 
 Of course, there's also a wrapper for this and `NtSetInformationProcess` is not necessary:
 ```cpp
 BOOL  
-SetProcessDynamicEnforcedCetCompatibleRanges (  
-    _In_ HANDLE ProcessHandle,  
-    _In_ WORD NumberOfRanges,  
-    _In_ PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE Ranges  
-    )  
+SetProcessDynamicEnforcedCetCompatibleRanges(  
+    _In_ HANDLE ProcessHandle,  
+    _In_ WORD NumberOfRanges,  
+    _In_ PPROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGE Ranges  
+)  
 {  
-    NTSTATUS status;  
-    PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION dynamicEnforcedAddressRanges;  
-    dynamicEnforcedAddressRanges.NumberOfRanges = NumberOfRanges;  
-    dynamicEnforcedAddressRanges.Ranges = Ranges;  
-    status = NtSetInformationProcess(ProcessHandle,  
-                                     ProcessDynamicEnforcedCetCompatibleRanges,  
-                                     &dynamicEnforcedAddressRanges,  
-                                     sizeof(PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION));  
-    if (NT_SUCCESS(status)) {  
-        return TRUE;  
-    }  
-    BaseSetLastNTError(status);  
-    return FALSE;  
+    NTSTATUS status;  
+    PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION dynamicEnforcedAddressRanges;  
+    dynamicEnforcedAddressRanges.NumberOfRanges = NumberOfRanges;  
+    dynamicEnforcedAddressRanges.Ranges = Ranges;  
+    status = NtSetInformationProcess(ProcessHandle,  
+        ProcessDynamicEnforcedCetCompatibleRanges,  
+        &dynamicEnforcedAddressRanges,  
+        sizeof(PROCESS_DYNAMIC_ENFORCED_ADDRESS_RANGES_INFORMATION));  
+
+    if (NT_SUCCESS(status)) {  
+        return TRUE;  
+    }  
+    BaseSetLastNTError(status);  
+    return FALSE;  
 }
 ```
 ## Problem??
