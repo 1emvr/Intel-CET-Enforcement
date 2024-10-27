@@ -124,12 +124,12 @@ public:
 	BaseB *objB = new BaseB;
 
 	virtual ~Derived() { // attacker-controlled virtual destructor
-		delete objA;
+		delete objA; 
 		objB->unref();
 	}
 }
 ```
-*Example provided by Bret Finley: https://github.com/bretafinley*
+*Example provided by Bret Finley: https://github.com/bretafinley* \[3\]
 
 - Unrolled COOP 
 
@@ -137,3 +137,5 @@ public:
 - modify vtables from read-access to execute-access only, preventing layout disclosure?
 ### sources:
    - https://windows-internals.com/cet-updates-dynamic-address-ranges/
+   - https://joannacss.github.io/preprints/msr4ps22-coop-preprint.pdf
+   - https://github.com/bretafinley/coop \[3\]
