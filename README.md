@@ -5,7 +5,7 @@ Legitimate functions or branch-targets must begin with an `ENDBRANCH` instructio
 
 Direct calls/jumps are unaffected by IBT since they're assumed safe.
 ## Shadow Stacks (SS)
-The Shadow Stack mechanism checks the integrity of the call-return chain in order to prevent ROP attacks.
+The Shadow Stack is used to check the integrity of the call-return chain in order to prevent ROP attacks.
 
 When a function is called, the return address is pushed onto the Shadow Stack (hardware protected). Upon return, the processor verifies that the address popped form the user's stack matches.
 
