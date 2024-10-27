@@ -99,7 +99,7 @@ Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn'
 
 Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. 
 
-
+These overridden functions reside in the vtable. 
 ## Possible Mitigations
 - modify vtables from read-access to execute-access only, preventing layout disclosure?
 ### sources:
