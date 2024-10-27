@@ -1,5 +1,3 @@
-Credits go to: https://windows-internals.com/cet-updates-dynamic-address-ranges/
-
 ## Indirect Branch Tracking (IBT)
 Legitimate functions or branch-targets must begin with an `ENDBRANCH` instruction (`ENDBR32` or `ENDBR64`). If an indirect call or jump lands on anything that is not end_branch, the hardware raises the `Control Protection (CP)` flag.
 
@@ -84,3 +82,7 @@ It only allows a process to add dynamic CET compatible ranges for remote process
 Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypass to CET, but this greatly increases the level of complexity for exploit-development and reduces the  attack surface dramatically.
 
 More about Counterfeit Object-Oriented Programming in another section...
+
+
+### sources:
+   - https://windows-internals.com/cet-updates-dynamic-address-ranges/
