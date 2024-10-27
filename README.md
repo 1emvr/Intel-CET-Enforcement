@@ -29,6 +29,10 @@ typedef struct _EPROCESS {
     // <...>
 } EPROCESS, *PEPROCESS;
 
+//0x8 bytes (sizeof)
+struct _RTL_AVL_TREE {
+    struct _RTL_BALANCED_NODE* Root;                                        //0x0
+}; 
 
 //0x10 bytes (sizeof)
 struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES {
