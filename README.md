@@ -126,9 +126,7 @@ loop_exit:
 
 vtable pointer corruption from another chained vulnerability overwrites a vtable pointer and we get an indirect call primitive. 
 
-Obtaining the vfgadget's \_this pointer requires leaking the stack pointer first and retrieving \_this from a static offset. Preparing an API call with the function address and arguments at the required offsets within the counterfeit object.
-
-Obviously this will require calculating addresses to API calls as well. 
+Obtaining the vfgadget's \_this pointer requires leaking the stack pointer first and retrieving \_this from a static offset and preparing an API call requires calculating the function address and arguments at the required offsets within the counterfeit object.
 
 ```cpp
 class OffSec {
