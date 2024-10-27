@@ -96,7 +96,7 @@ Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypa
 
 ## Counterfeit Object-Oriented Programming (COOP)
 In 2015, Felix Schuster and his team researched this new code-reuse method:
-https://ieeexplore.ieee.org/document/7163058/metrics#metrics
+https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7163058
 
 Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. 
 
