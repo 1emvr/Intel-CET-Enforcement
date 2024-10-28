@@ -156,11 +156,8 @@ loop_exit:
 ```
 *Matteo Malvica's example vfgadget*
 
-The callback is just an empty C-style function pointer. In his PoC, the OffSec class is simply loaded into memory. *Reverse engineering time...*
+The callback is just an empty C-style function pointer. In Matteo's PoC, the OffSec class is simply loaded into memory. 
+*Reverse engineering time!*
 
 
 // TODO
-## Required Addresses
-- storage buffer for the counterfeit object
-- invoker vfgadget
-- API addresses
