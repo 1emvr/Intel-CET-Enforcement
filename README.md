@@ -40,7 +40,6 @@ struct _PS_DYNAMIC_ENFORCED_ADDRESS_RANGES {
     struct _EX_PUSH_LOCK Lock;                                              //0x8
 }; 
 
-
 ```
 
 The `_PS_DYNAMIC_ENFORCED_ADDRESS_RANGES` struct contains an `RTL_AVL_TREE` and an `EX_PUSH_LOCK`. New ranges are inserted into the tree through a call to `NtSetInformationProcess` with the new information class `ProcessDynamicEnforcedCetCompatibleRanges (0x66)`
@@ -98,11 +97,25 @@ Of course, Counterfeit Object-Oriented Programming (COOP) is still a viable bypa
 In 2015, Felix Schuster and his team researched this new code-reuse method:
 https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7163058
 
-Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow. 
-
-Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. These virtual functions reside in the vtable. Although the vtable is a read-only data structure, the table's pointer is not.
+Counterfeit OOP is a code-reuse attack similar to ROP/JIT-ROP, however it doesn't require a stack overflow.  Because of C++ class inheritance, virtual functions provide overwritable pointers defined in their base classes, allowing for derived classes to set their own functionality dynamically. These virtual functions reside in the vtable. Although the vtable is a read-only data structure, the table's pointer is not.
 
 The question is, what is the process necessary to replace a vtable pointer to an attacker-controlled, forged vtable? Also, how is the call-chain constructed?
+
+## Limitations
+- **Limited Availability of vfgadgets**:
+    - **Specificity**: Virtual function gadgets are generally more specialized than ROP gadgets. While ROP gadgets can often be found in various forms (especially in complex binaries with many functions), useful vfgadgets may be much rarer. They need to align with specific object-oriented design patterns and be appropriate for the attacker’s objectives.
+    - **Dependency on Object Layout**: The success of counterfeit OOP hinges on how the targeted application utilizes polymorphism and how its vtables are structured. If the application doesn’t have a rich enough object-oriented structure or if the vtable pointers are protected, finding usable gadgets becomes significantly more challenging.
+    
+- **Comparison to ROP**:
+    - **Diversity of Gadgets**: ROP exploits often have a wealth of gadgets available due to the sheer number of instructions present in the binary and shared libraries. Attackers can usually find many useful sequences that allow them to craft flexible and powerful payloads.
+    - **Flexibility and Creativity**: ROP allows attackers to string together various gadgets to perform complex operations, enabling more versatile exploits. In contrast, counterfeit OOP is limited to the function calls defined by the application’s object structures, which may not provide the same level of flexibility.
+    
+- **Local vs. Remote Contexts**:
+    - In a local context where code injection is feasible, an attacker could potentially write their own vfgadgets, but this still requires intricate knowledge of the target's memory layout and behavior, making it a more complicated task.
+    - In a remote context, the difficulty of crafting a successful exploit increases due to the constraints on what can be executed and the need for existing, callable functions.
+    
+- **Potential Workarounds**:
+    - While attackers might try to exploit specific calls (like `WinExec("powershell.exe")`), these often rely on the existence of functions that can be used as gadgets. However, the reliance on specific functions diminishes the generality and robustness of the approach compared to ROP chains that can leverage a variety of existing instructions.
 
 ## Targeted Dispatchers for COOP:
 
