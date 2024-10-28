@@ -128,7 +128,7 @@ The question is, what is the process necessary to replace a vtable pointer to an
 
 *scenario*: Another chained vulnerability in the application overwrites a vtable pointer and we get an indirect call primitive. 
 
-- Obtaining the vfgadget offset from stack pointer->\_this + offset
+- Obtaining the vfgadget offset from `[stack_pointer + _this + offset]`
 - Preparing an API call, calculating the function address and arguments 
 - Writing argument data at the required offsets within the counterfeit object.
 
