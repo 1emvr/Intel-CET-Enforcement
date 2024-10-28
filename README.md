@@ -118,7 +118,7 @@ The question is, what is the process necessary to replace a vtable pointer to an
     - While attackers might try to exploit specific calls (like `WinExec("powershell.exe")`), these often rely on the existence of functions that can be used as gadgets. However, the reliance on specific functions diminishes the generality and robustness of the approach compared to ROP chains that can leverage a variety of existing instructions.
 
 ## Potential Workarounds
-- Launching one's own vfgadgets from another process and registering it with CET (very hacky/potentially OPSEC un-safe and may not be allowed in certain environments)
+- Launching one's own vfgadgets from a process (very hacky/potentially OPSEC un-safe and may not be allowed in certain environments)
 
 ## Targeted Dispatchers for COOP:
 
